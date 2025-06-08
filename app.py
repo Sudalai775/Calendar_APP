@@ -9,27 +9,19 @@ import json
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app)  # Enable CORS for all routes
 
-# ==============================
-# Google Sheets Configuration
-# ==============================
-
+# Spreadsheet details
 SPREADSHEET_ID = '1scnaCYJZaVFFy3WldSbzjxMR4eZVRuWr3ibR1sN_r7U'
 RANGE_NAME = 'Sheet1!A:F'
+
+# Load credentials from environment variable
+credentials_info = json.loads(os.environ['GOOGLE_CREDENTIALS_JSON'])
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
-# Load Google Service Account credentials from environment variable
-credentials_info = json.loads(os.environ['GOOGLE_CREDENTIALS_JSON'])
 credentials = service_account.Credentials.from_service_account_info(
     credentials_info, scopes=SCOPES
 )
-
-# Initialize Sheets API
 service = build('sheets', 'v4', credentials=credentials)
 sheet = service.spreadsheets()
-
-# ==============================
-# Routes
-# ==============================
 
 @app.route('/')
 def serve_index():
@@ -85,9 +77,6 @@ def get_timetable():
 
     return jsonify(timetable)
 
-# ==============================
-# Entry Point
-# ==============================
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Important: bind to all interfaces for deployment
+    app.run(debug=True, host='0.0.0.0')
