@@ -4,7 +4,6 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from datetime import datetime
 import os
-import json
 
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app)  # Enable CORS for all routes
@@ -13,12 +12,13 @@ CORS(app)  # Enable CORS for all routes
 SPREADSHEET_ID = '1scnaCYJZaVFFy3WldSbzjxMR4eZVRuWr3ibR1sN_r7U'
 RANGE_NAME = 'Sheet1!A:F'
 
-# Load credentials from environment variable
-credentials_info = json.loads(os.environ['GOOGLE_CREDENTIALS_JSON'])
+# Path to Service Account credentials
+SERVICE_ACCOUNT_FILE = r'C:\Update Calendar 2k25\credentials.json'
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
-credentials = service_account.Credentials.from_service_account_info(
-    credentials_info, scopes=SCOPES
+# Initialize Google Sheets API
+credentials = service_account.Credentials.from_service_account_file(
+    SERVICE_ACCOUNT_FILE, scopes=SCOPES
 )
 service = build('sheets', 'v4', credentials=credentials)
 sheet = service.spreadsheets()
@@ -78,5 +78,4 @@ def get_timetable():
     return jsonify(timetable)
 
 if __name__ == '__main__':
-    # Important: bind to all interfaces for deployment
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True)
