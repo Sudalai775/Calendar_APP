@@ -5,28 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Calendar Timetable</title>
   <style>
-    :root {
-      --primary-color: #6200ea;
-      --secondary-color: #4b00c4;
-      --light-accent: #e0e0e0;
-      --holiday-color: #ccffcc;
-      --text-dark: #333;
-      --text-light: #fff;
-    }
-
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       margin: 0;
       background: #f4f4f4;
-      min-height: 100vh;
     }
 
     header {
-      background: var(--primary-color);
-      color: var(--text-light);
+      background: #6200ea;
+      color: white;
       padding: 1rem;
       text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
     .nav-buttons {
@@ -34,55 +23,27 @@
       justify-content: center;
       gap: 10px;
       margin-top: 10px;
-      flex-wrap: wrap;
     }
 
     .nav-buttons button {
-      padding: 8px 16px;
+      padding: 6px 12px;
       font-size: 14px;
       cursor: pointer;
-      background: var(--text-light);
-      color: var(--primary-color);
-      border: none;
-      border-radius: 5px;
-      transition: all 0.2s;
-    }
-
-    .nav-buttons button:hover {
-      background: var(--secondary-color);
-      color: var(--text-light);
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
     }
 
     .card {
-      background: var(--text-light);
-      padding: 1.5rem;
+      margin: 2rem auto;
+      max-width: 600px;
+      background: white;
+      padding: 1rem;
       border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     #month {
       text-align: center;
       font-size: 1.5rem;
       margin-bottom: 1rem;
-      color: var(--primary-color);
-      font-weight: bold;
-    }
-
-    .weekdays {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
-      margin-bottom: 10px;
-      font-weight: bold;
-      text-align: center;
-      color: var(--primary-color);
     }
 
     #days {
@@ -92,133 +53,77 @@
     }
 
     .month-day {
-      padding: 12px 5px;
-      background: var(--light-accent);
+      padding: 10px;
+      background: #e0e0e0;
       text-align: center;
       border-radius: 5px;
       cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
+      transition: background 0.3s;
     }
 
     .month-day:hover {
       background: #cfcfcf;
-      transform: translateY(-2px);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     .current-day {
-      background: var(--primary-color);
-      color: var(--text-light);
+      border: 2px solid #6200ea;
       font-weight: bold;
-    }
-
-    .weekend {
-      background: #ffcccc;
-    }
-
-    .holiday-day {
-      background: var(--holiday-color);
     }
 
     #timetable {
       display: none;
-      background: var(--text-light);
-      padding: 1.5rem;
+      max-width: 600px;
+      margin: 2rem auto;
+      background: white;
+      padding: 1rem;
       border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      animation: fadeIn 0.3s ease-out;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    #timetable h2 {
+      text-align: center;
     }
 
     .holiday-banner {
-      background: var(--holiday-color);
+      background: #ccffcc;
       padding: 10px;
-      margin: 15px 0;
+      margin: 10px 0;
       text-align: center;
       font-weight: bold;
-      border-radius: 5px;
     }
 
     .day-order {
       text-align: center;
-      margin: 15px 0;
-      font-weight: bold;
-      color: var(--primary-color);
+      margin: 10px 0;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 15px 0;
+      margin-top: 10px;
     }
 
-    th {
-      background: var(--primary-color);
-      color: var(--text-light);
-      padding: 10px;
+    th, td {
+      border: 1px solid #999;
+      padding: 8px;
       text-align: center;
-    }
-
-    td {
-      padding: 10px;
-      border: 1px solid #ddd;
-      text-align: center;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-
-    tr:hover {
-      background-color: #f1f1f1;
     }
 
     #back {
+      margin-top: 1rem;
       display: block;
-      margin: 20px auto 0;
-      padding: 10px 20px;
-      background: var(--primary-color);
-      color: var(--text-light);
+      margin-left: auto;
+      margin-right: auto;
+      padding: 8px 16px;
+      background: #6200ea;
+      color: white;
       border: none;
-      border-radius: 5px;
       cursor: pointer;
-      transition: all 0.2s;
+      border-radius: 5px;
     }
 
     #back:hover {
-      background: var(--secondary-color);
-      transform: scale(1.05);
-    }
-
-    .loading {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(0,0,0,.3);
-      border-radius: 50%;
-      border-top-color: var(--primary-color);
-      animation: spin 1s ease-in-out infinite;
-      margin-left: 10px;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    @media (max-width: 600px) {
-      .month-day {
-        padding: 8px 2px;
-        font-size: 14px;
-      }
-      
-      #month {
-        font-size: 1.2rem;
-      }
+      background: #4b00c4;
     }
   </style>
 </head>
@@ -232,25 +137,14 @@
     </div>
   </header>
 
-  <div class="container">
-    <div class="card">
-      <div id="month"></div>
-      <div class="weekdays">
-        <div>Sun</div>
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-      </div>
-      <div id="days"></div>
-    </div>
+  <div class="card">
+    <div id="month"></div>
+    <div id="days"></div>
+  </div>
 
-    <div id="timetable">
-      <div id="timetableBody"></div>
-      <button id="back">Back to Calendar</button>
-    </div>
+  <div id="timetable">
+    <div id="timetableBody"></div>
+    <button id="back">Back to Calendar</button>
   </div>
 
   <script>
@@ -266,7 +160,6 @@
 
         currentDate: new Date(),
         timetableData: {},
-        loading: false,
 
         async init() {
           await this.loadTimetableData();
@@ -275,7 +168,6 @@
         },
 
         async loadTimetableData() {
-          this.loading = true;
           try {
             const response = await fetch('http://localhost:5000/api/timetable');
             if (!response.ok) throw new Error('Failed to load timetable');
@@ -283,9 +175,6 @@
           } catch (error) {
             console.error('Timetable load error:', error);
             this.timetableData = {};
-            alert('Failed to load timetable data. Please try again later.');
-          } finally {
-            this.loading = false;
           }
         },
 
@@ -298,63 +187,36 @@
 
         renderCalendar() {
           const { year, month } = this.getCalendarParams();
-          const firstDay = new Date(year, month, 1).getDay();
           const lastDate = new Date(year, month + 1, 0).getDate();
-          const prevLastDate = new Date(year, month, 0).getDate();
 
           this.elements.monthElement.textContent = 
             `${this.currentDate.toLocaleString('default', { month: 'long' })} ${year}`;
 
           this.elements.daysContainer.innerHTML = '';
 
-          // Previous month's days
-          for (let i = firstDay; i > 0; i--) {
-            const dayElement = document.createElement('div');
-            dayElement.className = 'month-day padding-day';
-            dayElement.textContent = prevLastDate - i + 1;
-            this.elements.daysContainer.appendChild(dayElement);
-          }
-
-          // Current month's days
           for (let i = 1; i <= lastDate; i++) {
             const dayElement = this.createDayElement(year, month, i);
             this.elements.daysContainer.appendChild(dayElement);
-          }
-
-          // Next month's days
-          const totalDays = firstDay + lastDate;
-          const nextDays = 7 - (totalDays % 7);
-          if (nextDays < 7) {
-            for (let i = 1; i <= nextDays; i++) {
-              const dayElement = document.createElement('div');
-              dayElement.className = 'month-day padding-day';
-              dayElement.textContent = i;
-              this.elements.daysContainer.appendChild(dayElement);
-            }
           }
         },
 
         createDayElement(year, month, day) {
           const date = new Date(year, month, day);
-          const dateString = date.toISOString().split('T')[0];
+          const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
           const dayElement = document.createElement('div');
 
           dayElement.className = 'month-day';
           dayElement.textContent = day;
 
-          // Highlight today
           if (date.toDateString() === new Date().toDateString()) {
             dayElement.classList.add('current-day');
           }
 
-          // Highlight weekends and holidays
-          if (date.getDay() === 0 || date.getDay() === 6) {
-            dayElement.classList.add('weekend');
-          }
-
           const dayData = this.timetableData[dateString];
-          if (dayData?.holiday) {
-            dayElement.classList.add('holiday-day');
+          if (date.getDay() === 0) {
+            dayElement.style.backgroundColor = '#ffcccc';
+          } else if (dayData?.holiday) {
+            dayElement.style.backgroundColor = '#ccffcc';
             dayElement.title = dayData.holiday;
           }
 
@@ -374,20 +236,10 @@
         },
 
         async showTimetable(dateString) {
-          if (this.loading) {
-            this.elements.timetableBody.innerHTML = '<div>Loading data... <span class="loading"></span></div>';
-            return;
-          }
-
           const dayData = this.timetableData[dateString] || {};
-          
+
           this.elements.timetableBody.innerHTML = `
-            <h2>${new Date(dateString).toLocaleDateString('en-US', { 
-              weekday: 'long', 
-              year: 'numeric', 
-              month: 'long', 
-              day: 'numeric' 
-            })}</h2>
+            <h2>${new Date(dateString).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</h2>
             ${dayData.holiday ? `<div class="holiday-banner">${dayData.holiday}</div>` : ''}
             <div class="day-order">Day Order: ${dayData.day_order || 'Not Scheduled'}</div>
             <table>
@@ -420,7 +272,6 @@
         showTimetableSection() {
           this.elements.timetableSection.style.display = 'block';
           this.elements.calendarSection.style.display = 'none';
-          window.scrollTo({ top: 0, behavior: 'smooth' });
         },
 
         showCalendar() {
